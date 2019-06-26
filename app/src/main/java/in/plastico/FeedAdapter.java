@@ -36,7 +36,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         FeedViewHolder.textUserName.setText("From :"+feedData.getUserName());
         FeedViewHolder.textFeedType.setText("feed Type: "+feedData.getFeedType());
         FeedViewHolder.textFeedData.setText("product Name :"+feedData.getProductName());
-        FeedViewHolder.textFeedPrice.setText("Price :"+feedData.getProductPrice()+" Qty: "+feedData.getProductQty());
+        FeedViewHolder.textFeedPrice.setText("Price :"+feedData.getProductPrice());
+        FeedViewHolder.textFeedQty.setText(" Qty: "+feedData.getProductQty());
     }
 
     @Override
@@ -46,13 +47,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
     public static class FeedViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        static TextView textUserName,textFeedType,textFeedData,textFeedPrice;
+        static TextView textUserName,textFeedType,textFeedData,textFeedPrice,textFeedQty;
         public FeedViewHolder(@NonNull View itemView) {
             super(itemView);
             textUserName=(TextView)itemView.findViewById(R.id.textUserName);
             textFeedType=(TextView)itemView.findViewById(R.id.textFeedType);
             textFeedData=(TextView)itemView.findViewById(R.id.textFeedData);
             textFeedPrice=(TextView) itemView.findViewById(R.id.textFeedPrice);
+            textFeedQty=(TextView)itemView.findViewById(R.id.textFeedQty);
         }
     }
 }
