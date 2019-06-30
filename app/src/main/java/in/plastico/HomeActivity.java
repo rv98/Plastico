@@ -1,5 +1,6 @@
 package in.plastico;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +19,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +40,7 @@ public class HomeActivity extends AppCompatActivity
     final Fragment fragment3 = new ProfileFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +66,17 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Code i wrote
+        Bundle bundle = new Bundle();
+        bundle.putString("uid",getIntent().getStringExtra("uid"));
+        bundle.putString("name",getIntent().getStringExtra("name"));
+        bundle.putString("type",getIntent().getStringExtra("type"));
+        bundle.putString("token",getIntent().getStringExtra("token"));
+        token = getIntent().getStringExtra("token");
+        fragment3.setArguments(bundle);
+        Log.d("data: ","uid "+getIntent().getStringExtra("uid")+" name "+getIntent().getStringExtra("name")
+                +" type "+getIntent().getStringExtra("type")+" token "+getIntent().getStringExtra("token"));
+        Toast.makeText(this, "uid "+getIntent().getStringExtra("uid")+" name "+getIntent().getStringExtra("name")
+                +" type "+getIntent().getStringExtra("type")+" token "+getIntent().getStringExtra("token"), Toast.LENGTH_LONG).show();
 
         //loadFragment(new FeedsFragment());
         fm.beginTransaction().add(R.id.fragment_container, fragment3, "3").hide(fragment3).commit();
@@ -163,8 +188,45 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void doLogout(View view)
+    {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://www.plastico.activemedia.in/api/logout.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-    public void logout(View view) {
-        this.finish();
+                        progressDialog.dismiss();
+                        Log.d("response :",response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Toast.makeText(HomeActivity.this, "Logout Success!", Toast.LENGTH_SHORT).show();
+                            finish();
+                            Log.d("response",response);
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error",error.toString());
+                    }
+                }
+        ){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", token);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
     }
+
 }

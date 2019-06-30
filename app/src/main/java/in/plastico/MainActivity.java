@@ -1,5 +1,6 @@
 package in.plastico;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -66,23 +67,35 @@ public class MainActivity extends AppCompatActivity
 	{
 		startActivity(new Intent(MainActivity.this,HomeActivity.class));
 	}
-	public void callLoginApi()
+	public void doLogin(View view)
 	{
-		StringRequest stringRequest = new StringRequest(Request.Method.GET, "plastico.activemedia.in/api/login.php",
+		final ProgressDialog progressDialog = new ProgressDialog(this);
+		progressDialog.setMessage("Loading...");
+		progressDialog.show();
+		StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://www.plastico.activemedia.in/api/login.php",
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
 
+						progressDialog.dismiss();
 						Log.d("response :",response);
 						try {
 							JSONObject jsonObject = new JSONObject(response);
 							String loginStatus = jsonObject.getString("response");
 							String uid = jsonObject.getString("uid");
 							String name = jsonObject.getString("name");
+							String type = jsonObject.getString("type");
 							String token = jsonObject.getString("token");
 
+							Log.d("loginResponse",loginStatus);
+							Log.d("response",response);
 							Toast.makeText(MainActivity.this, "Login Successful"+response, Toast.LENGTH_SHORT).show();
-							startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                            Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                            intent.putExtra("uid",uid);
+                            intent.putExtra("name",name);
+                            intent.putExtra("type",type);
+                            intent.putExtra("token",token);
+							startActivity(intent);
 						}
 						catch (Exception e)
 						{
@@ -109,6 +122,7 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void openRegistration(View view) {
-		Toast.makeText(this, "Registration Page", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Registration Page", Toast.LENGTH_SHORT).show();
+		startActivity(new Intent(this,Registration.class));
 	}
 }

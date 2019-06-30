@@ -14,7 +14,7 @@ public class FragmentBuySellForm extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buy_sell_form, container, false);
+        View view = inflater.inflate(R.layout.fragment_buy_sell_form_temp, container, false);
 
         MaterialSpinner feedType = (MaterialSpinner) view.findViewById(R.id.feedType);
         MaterialSpinner productName = (MaterialSpinner)view.findViewById(R.id.productName);

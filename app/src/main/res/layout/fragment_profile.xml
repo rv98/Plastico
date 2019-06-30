@@ -5,20 +5,77 @@
 
     <TextView
         android:id="@+id/profile_text"
-        android:layout_width="wrap_content"
+        android:layout_width="131dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="153dp"
+        android:layout_marginLeft="153dp"
+        android:layout_marginEnd="127dp"
+        android:layout_marginRight="127dp"
         android:text="Profile"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_text"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="135dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="145dp"
+        android:layout_marginRight="145dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/profileUid"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
+        android:text="uid"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+        <TextView
+            android:id="@+id/profileType"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:text="type"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+        <TextView
+            android:id="@+id/profileToken"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:text="token"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/logoutbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:onClick="doLogout"
         android:layout_below="@id/profile_text"
-        android:layout_marginTop="50dp"
-        android:onClick="logout"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="163dp"
+        android:layout_marginLeft="163dp"
+        android:layout_marginTop="480dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginRight="160dp"
+        android:layout_marginBottom="45dp"
         android:text="Logout" />
 
 </RelativeLayout>

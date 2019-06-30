@@ -55,7 +55,7 @@
         android:layout_marginTop="@dimen/_35sdp"
         android:layout_gravity="center"
         android:text="LOGIN"
-        android:onClick="login"
+        android:onClick="doLogin"
         android:background="#9575CD"
         android:layout_marginLeft="@dimen/_15sdp"
         android:layout_marginRight="@dimen/_15sdp"
